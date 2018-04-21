@@ -1,18 +1,18 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import org.jetbrains.annotations.Contract;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class TcpEchoServer {
 
     private ServerSocket serverSocket;
+    private Socket clientSocket;
     private static final int PORT = 3345;
 
-    private TcpEchoServer() {
+    public TcpEchoServer() {
         try {
             setServer(new ServerSocket(PORT));
         } catch (Exception ex) {
@@ -20,16 +20,7 @@ public class TcpEchoServer {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            TcpEchoServer server = new TcpEchoServer();
-            server.serve();
-        } catch (Exception e) {
-            System.err.println("Couldn't start server:\n" + e);
-        }
-    }
-
-    private void stop() {
+    public void disconnect() {
         try {
             serverSocket.close();
             System.out.println("TCP Echo Server Stopped on port " + PORT);
@@ -38,14 +29,18 @@ public class TcpEchoServer {
         }
     }
 
-    private void serve() throws IOException {
-
-        Socket clientSocket;
+    public void connect() throws IOException {
         try {
             System.out.println("TCP Echo Server Started on port " + PORT + ".\nWaiting for connection.....");
             clientSocket = serverSocket.accept();
             System.out.println("Client Connection successful\nWaiting for input.....");
+        } catch (IOException e) {
+            System.out.println("Exception in echo server.\nExpected when shutdown. {}" + e.getLocalizedMessage());
+        }
+    }
 
+    public void send() {
+        try {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String inputLine;
@@ -60,29 +55,34 @@ public class TcpEchoServer {
             }
         } catch (IOException e) {
             System.out.println("Exception in echo server.\nExpected when shutdown. {}" + e.getLocalizedMessage());
-        } finally {
-            if (serverSocket != null && !serverSocket.isClosed()) {
-                stop();
-            }
         }
     }
 
     public void login() {
-
+        try {
+            OutputStream out = clientSocket.getOutputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out.write("login: ".getBytes());
+            String login = in.readLine();
+            System.out.println("Login is " + login);
+        } catch (IOException e) {
+            System.out.println("Incorrect login. Server will be stop. Please, try again");
+        }
     }
 
     public void password() {
-
+        try {
+            OutputStream out = clientSocket.getOutputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out.write("password: ".getBytes());
+            String password = in.readLine();
+            System.out.println("Password is " + password);
+        } catch (IOException e) {
+            System.out.println("Incorrect password. Server will be stop. Please, try again");
+        }
     }
 
-    public void connect() {
-
-    }
-
-    public void disconnect() {
-
-    }
-
+    @Contract(pure = true)
     private ServerSocket getServer() {
         return serverSocket;
     }

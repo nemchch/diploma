@@ -12,17 +12,17 @@ import java.util.List;
 
 public class TSTParser {
 
-    public List<Action> parse(String globalAction) throws IllegalActionException {
+    public static List<Action> parse(String globalAction) throws IllegalActionException {
         List<Action> actionList = new ArrayList<>();
         globalAction = validate(globalAction);
         String[] actions = globalAction.split("\\.");
         for (String action : actions) {
             if (action.startsWith("!")) {
-                SendAction sendAction = (SendAction) setParameters(action);
+                SendAction sendAction = new SendAction(setParameters(action));
                 actionList.add(sendAction);
             } else {
                 if (action.startsWith("?")) {
-                    ReceiveAction receiveAction = (ReceiveAction) setParameters(action);
+                    ReceiveAction receiveAction = new ReceiveAction(setParameters(action));
                     actionList.add(receiveAction);
                 } else {
                     throw new IllegalActionException();
@@ -33,11 +33,11 @@ public class TSTParser {
     }
 
     @NotNull
-    private String validate(String string) {
+    private static String validate(String string) {
         return string.replaceAll(" ", "").toLowerCase();
     }
 
-    private Action setParameters(String string) {
+    private static Action setParameters(String string) {
         Action action = new Action();
         try {
             action.setLabel(Label.valueOf(string.substring(1, string.indexOf("{"))));
