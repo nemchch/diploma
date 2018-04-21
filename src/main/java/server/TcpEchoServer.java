@@ -1,3 +1,5 @@
+package server;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -63,6 +65,22 @@ public class TcpEchoServer {
                 stop();
             }
         }
+    }
+
+    public void login() {
+
+    }
+
+    public void password() {
+
+    }
+
+    public void connect() {
+
+    }
+
+    public void disconnect() {
+
     }
 
     private ServerSocket getServer() {
