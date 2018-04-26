@@ -21,6 +21,5 @@
     </beans:bean>
     <mvc:resources mapping="/resources/**" location=".."/>
     <context:component-scan base-package="diploma"/>
-    <context:component-scan base-package="org.hibernate"/>
 
 </beans:beans>

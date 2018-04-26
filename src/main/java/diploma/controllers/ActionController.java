@@ -31,7 +31,7 @@ public class ActionController {
                 try {
                     server.connect();
                 } catch (Exception e) {
-                    System.err.println("Couldn't start diploma.server:\n" + e);
+                    System.err.println("Couldn't start server:\n" + e);
                 }
             }
             if (action.getLabel().equals(Label.disconnect)) {

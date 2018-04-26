@@ -40,7 +40,7 @@ public class TcpEchoServer {
             userActivityService.disconnected(userActivityId, time);
             System.out.println("TCP Echo Server Stopped on port " + PORT);
         } catch (Exception e) {
-            System.out.println("error in stop diploma.server socket " + e);
+            System.out.println("Error in stop server socket " + e);
         }
     }
 
@@ -50,7 +50,7 @@ public class TcpEchoServer {
             clientSocket = serverSocket.accept();
             System.out.println("Client Connection successful\nWaiting for input.....");
         } catch (IOException e) {
-            System.out.println("Exception in echo diploma.server.\nExpected when shutdown. {}" + e.getLocalizedMessage());
+            System.out.println("Exception in echo server.\nExpected when shutdown. {}" + e.getLocalizedMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class TcpEchoServer {
                 in.close();
             }
         } catch (IOException e) {
-            System.out.println("Exception in echo diploma.server.\nExpected when shutdown. {}" + e.getLocalizedMessage());
+            System.out.println("Exception in echo server.\nExpected when shutdown. {}" + e.getLocalizedMessage());
         }
     }
 
