@@ -6,22 +6,23 @@ import javax.persistence.*;
 @Table(name = "users", schema = "public", catalog = "diploma")
 public class UserEntity {
     @Id
-    private Integer userId;
+    @Column(name = "user_id")
+    private long userId;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
 
-    @Basic
-    @Column(name = "user_id")
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    @Basic
-    @Column(name = "login")
     public String getLogin() {
         return login;
     }
@@ -30,8 +31,6 @@ public class UserEntity {
         this.login = login;
     }
 
-    @Basic
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -40,25 +39,4 @@ public class UserEntity {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserEntity that = (UserEntity) o;
-
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (login != null ? !login.equals(that.login) : that.login != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        return result;
-    }
 }

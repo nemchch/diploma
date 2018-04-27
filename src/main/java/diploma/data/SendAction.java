@@ -1,7 +1,9 @@
 package diploma.data;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SendAction extends Action {
-    public SendAction(Action action) {
+    public SendAction(@NotNull Action action) {
         this.setTime(action.getTime());
         this.setLabel(action.getLabel());
     }

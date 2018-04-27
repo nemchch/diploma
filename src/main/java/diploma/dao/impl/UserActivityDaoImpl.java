@@ -7,11 +7,9 @@ import diploma.model.UserActivityEntity;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-@Log4j2
-@Repository
 public class UserActivityDaoImpl extends Dao implements UserActivityDao {
     @Override
-    public Integer connected(UserActivityEntity userActivityEntity) {
+    public long connected(UserActivityEntity userActivityEntity) {
         Session session = null;
         try {
             session = this.getSession();
@@ -19,7 +17,7 @@ public class UserActivityDaoImpl extends Dao implements UserActivityDao {
             session.save(userActivityEntity);
             session.getTransaction().commit();
         } catch (Exception e) {
-            //log.error(e, new RuntimeException("EventDao error on removeEvent"));
+            System.out.println(e.getMessage());
         } finally {
             if (session != null && session.isOpen())
                 session.close();
@@ -28,7 +26,7 @@ public class UserActivityDaoImpl extends Dao implements UserActivityDao {
     }
 
     @Override
-    public void disconnected(Integer id, String disconnectionTime) {
+    public void disconnected(long id, String disconnectionTime) {
         Session session = null;
         try {
             session = this.getSession();
@@ -38,7 +36,7 @@ public class UserActivityDaoImpl extends Dao implements UserActivityDao {
             session.update(userActivityEntity);
             session.getTransaction().commit();
         } catch (Exception e) {
-            //log.error(e, new RuntimeException("EventDao error on removeEvent"));
+            System.out.println(e.getMessage());
         } finally {
             if (session != null && session.isOpen())
                 session.close();

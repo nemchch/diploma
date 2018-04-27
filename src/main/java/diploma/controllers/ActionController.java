@@ -3,21 +3,19 @@ package diploma.controllers;
 import diploma.data.Action;
 import diploma.data.Label;
 import diploma.exceptions.IllegalActionException;
+import diploma.main.ApplicationRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Controller;
 import diploma.server.TcpEchoServer;
 import diploma.utils.TSTParser;
 
 import java.util.List;
 
-@Controller
 public class ActionController {
-
-    @Autowired
-    TcpEchoServer server;
-
-    public void testing() {
-        String string =  "?connect{t<10} . !login{t<30}. !password{t<40} .! send {t<30} .! disconnect{t<10}";
+    public static void main(String[] args) {
+        String string = "?connect{t<10} . !login{t<30}. !password{t<40} .! send {t<30} .! disconnect{t<10}";
+        TcpEchoServer server = new TcpEchoServer();
         List<Action> actions = null;
         try {
             actions = TSTParser.parse(string);

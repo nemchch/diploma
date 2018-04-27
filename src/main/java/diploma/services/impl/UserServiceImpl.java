@@ -1,18 +1,17 @@
 package diploma.services.impl;
 
 import diploma.dao.UserDao;
+import diploma.dao.impl.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import diploma.services.UserService;
 
-@Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserDao userDao;
+    private UserDao userDao = new UserDaoImpl();
 
     @Override
-    public Integer getId(String login) {
+    public long getId(String login) {
         return userDao.getId(login);
 
     }

@@ -32,8 +32,9 @@ public class TSTParser {
         return actionList;
     }
 
+
     @NotNull
-    private static String validate(String string) {
+    private static String validate(@NotNull String string) {
         return string.replaceAll(" ", "").toLowerCase();
     }
 
