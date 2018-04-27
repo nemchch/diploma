@@ -15,7 +15,5 @@
         <mapping class="diploma.model.UserActivityEntity"/>
         <mapping class="diploma.model.UserEntity"/>
 
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>
