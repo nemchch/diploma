@@ -2,7 +2,6 @@ package diploma.dao.impl;
 
 import diploma.dao.Dao;
 import diploma.dao.UserDao;
-import org.springframework.stereotype.Repository;
 
 public class UserDaoImpl extends Dao implements UserDao {
 

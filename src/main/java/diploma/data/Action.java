@@ -4,7 +4,7 @@ public class Action {
     private Label label;
     private int time;
 
-    public int getTime() {
+    int getTime() {
         return time;
     }
 

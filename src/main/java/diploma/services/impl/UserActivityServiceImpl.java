@@ -5,8 +5,6 @@ import diploma.dao.UserDao;
 import diploma.dao.impl.UserActivityDaoImpl;
 import diploma.dao.impl.UserDaoImpl;
 import diploma.model.UserActivityEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import diploma.services.UserActivityService;
 
 public class UserActivityServiceImpl implements UserActivityService {

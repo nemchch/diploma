@@ -3,10 +3,6 @@ package diploma.controllers;
 import diploma.data.Action;
 import diploma.data.Label;
 import diploma.exceptions.IllegalActionException;
-import diploma.main.ApplicationRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.stereotype.Controller;
 import diploma.server.TcpEchoServer;
 import diploma.utils.TSTParser;
 

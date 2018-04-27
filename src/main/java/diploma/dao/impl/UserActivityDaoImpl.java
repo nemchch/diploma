@@ -2,10 +2,8 @@ package diploma.dao.impl;
 
 import diploma.dao.Dao;
 import diploma.dao.UserActivityDao;
-import lombok.extern.log4j.Log4j2;
 import diploma.model.UserActivityEntity;
 import org.hibernate.Session;
-import org.springframework.stereotype.Repository;
 
 public class UserActivityDaoImpl extends Dao implements UserActivityDao {
     @Override

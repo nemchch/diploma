@@ -12,7 +12,4 @@ public class Dao {
         return sessionFactory.openSession();
     }
 
-    protected Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
 }
