@@ -1,4 +1,4 @@
-package diploma.services;
+package services;
 
 public interface UserActivityService {
     long connected(String login, String connectionTime);

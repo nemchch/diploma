@@ -1,4 +1,4 @@
-package diploma.data;
+package data;
 
 import org.jetbrains.annotations.NotNull;
 

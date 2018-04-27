@@ -1,11 +1,11 @@
-package diploma.services.impl;
+package services.impl;
 
-import diploma.dao.UserActivityDao;
-import diploma.dao.UserDao;
-import diploma.dao.impl.UserActivityDaoImpl;
-import diploma.dao.impl.UserDaoImpl;
-import diploma.model.UserActivityEntity;
-import diploma.services.UserActivityService;
+import dao.UserActivityDao;
+import dao.UserDao;
+import dao.impl.UserActivityDaoImpl;
+import dao.impl.UserDaoImpl;
+import model.UserActivityEntity;
+import services.UserActivityService;
 
 public class UserActivityServiceImpl implements UserActivityService {
 

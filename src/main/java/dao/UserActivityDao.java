@@ -1,6 +1,6 @@
-package diploma.dao;
+package dao;
 
-import diploma.model.UserActivityEntity;
+import model.UserActivityEntity;
 
 public interface UserActivityDao {
     long connected(UserActivityEntity userActivityEntity);

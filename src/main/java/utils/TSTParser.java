@@ -1,10 +1,10 @@
-package diploma.utils;
+package utils;
 
-import diploma.data.Action;
-import diploma.data.Label;
-import diploma.data.ReceiveAction;
-import diploma.data.SendAction;
-import diploma.exceptions.IllegalActionException;
+import data.Action;
+import data.Label;
+import data.ReceiveAction;
+import data.SendAction;
+import exceptions.IllegalActionException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package diploma.data;
+package data;
 
 public class Action {
     private Label label;

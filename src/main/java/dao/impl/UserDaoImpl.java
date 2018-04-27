@@ -1,7 +1,7 @@
-package diploma.dao.impl;
+package dao.impl;
 
-import diploma.dao.Dao;
-import diploma.dao.UserDao;
+import dao.Dao;
+import dao.UserDao;
 
 public class UserDaoImpl extends Dao implements UserDao {
 

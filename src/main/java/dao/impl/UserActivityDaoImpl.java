@@ -1,8 +1,8 @@
-package diploma.dao.impl;
+package dao.impl;
 
-import diploma.dao.Dao;
-import diploma.dao.UserActivityDao;
-import diploma.model.UserActivityEntity;
+import dao.Dao;
+import dao.UserActivityDao;
+import model.UserActivityEntity;
 import org.hibernate.Session;
 
 public class UserActivityDaoImpl extends Dao implements UserActivityDao {

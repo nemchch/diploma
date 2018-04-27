@@ -1,8 +1,8 @@
-package diploma.server;
+package server;
 
-import diploma.services.impl.UserActivityServiceImpl;
+import services.impl.UserActivityServiceImpl;
 import org.jetbrains.annotations.Contract;
-import diploma.services.UserActivityService;
+import services.UserActivityService;
 
 import java.io.BufferedReader;
 import java.io.IOException;

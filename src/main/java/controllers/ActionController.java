@@ -1,10 +1,10 @@
-package diploma.controllers;
+package controllers;
 
-import diploma.data.Action;
-import diploma.data.Label;
-import diploma.exceptions.IllegalActionException;
-import diploma.server.TcpEchoServer;
-import diploma.utils.TSTParser;
+import data.Action;
+import data.Label;
+import exceptions.IllegalActionException;
+import server.TcpEchoServer;
+import utils.TSTParser;
 
 import java.util.List;
 

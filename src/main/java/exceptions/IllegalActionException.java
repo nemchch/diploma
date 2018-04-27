@@ -1,4 +1,4 @@
-package diploma.exceptions;
+package exceptions;
 
 public class IllegalActionException extends Exception {
 
