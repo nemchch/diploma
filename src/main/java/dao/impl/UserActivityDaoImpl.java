@@ -14,8 +14,7 @@ public class UserActivityDaoImpl extends Dao implements UserActivityDao {
             session.beginTransaction();
             session.save(userActivityEntity);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ignored) {
         } finally {
             if (session != null && session.isOpen())
                 session.close();
@@ -33,8 +32,7 @@ public class UserActivityDaoImpl extends Dao implements UserActivityDao {
             userActivityEntity.setDisconnectionTime(disconnectionTime);
             session.update(userActivityEntity);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ignored) {
         } finally {
             if (session != null && session.isOpen())
                 session.close();

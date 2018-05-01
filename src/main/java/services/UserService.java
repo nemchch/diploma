@@ -1,7 +1,6 @@
-package dao;
+package services;
 
-public interface UserDao {
-    long getId(String login);
+public interface UserService {
     String getPassword(String login);
     boolean isLogin(String login);
 }
