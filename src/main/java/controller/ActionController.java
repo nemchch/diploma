@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ActionController {
     public static void main(String[] args) {
-        String string = "?connect{t<10} . !login{t<30}. !password{t<30} .! send {t<60} .! disconnect{t<10}";
+        String string = "?connect{t<10} . !login{t<5}. !password{t<30} .! send {t<60} .! disconnect{t<10}";
         TcpEchoServer server = new TcpEchoServer();
         List<Action> actions = null;
         TimeLimiter timeLimiter = new SimpleTimeLimiter();
@@ -57,7 +57,7 @@ public class ActionController {
             }
         } catch (Exception e) {
             server.writeError();
-            System.err.println("\r\nTimeout expired\r\n");
+            System.err.println("\nTimeout expired.\n");
             server.disconnect();
         }
     }

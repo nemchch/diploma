@@ -36,7 +36,7 @@ public class TcpEchoServer {
     public void writeError() {
         try {
             OutputStream out = clientSocket.getOutputStream();
-            out.write(("\r\n\r\nTimeout expired").getBytes());
+            out.write(("\r\n\r\nTimeout expired.\r\n").getBytes());
         } catch (IOException ignored) {
         }
     }
