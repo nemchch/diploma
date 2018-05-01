@@ -33,7 +33,7 @@ public class UserDaoImpl extends Dao implements UserDao {
     public boolean isLogin(String login) {
         String realLogin = "";
         try {
-            realLogin = (String) this.getSession().createQuery("select password from UserEntity where login = :login")
+            realLogin = (String) this.getSession().createQuery("select login from UserEntity where login = :login")
                     .setParameter("login", login)
                     .list().get(0);
         } catch (Exception ignored) {

@@ -52,6 +52,7 @@ public class TcpEchoServer {
             serverSocket.close();
             clientSocket.close();
             System.out.println("TCP Echo Server Stopped on port " + PORT + ".");
+            System.exit(0);
         } catch (Exception ignored) {
         }
     }
@@ -70,26 +71,29 @@ public class TcpEchoServer {
         }
     }
 
-    public String send() {
-        try {
-            OutputStream out = clientSocket.getOutputStream();
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out.write((user + ": ").getBytes());
-            String inputLine;
-            inputLine = in.readLine();
-            System.out.println("Server: " + inputLine);
-            if (inputLine.equals("quit")) {
-                out.close();
-                clientSocket.close();
-                in.close();
-            }
-        } catch (IOException e) {
-            System.out.println("Exception in echo server.\nExpected when shutdown. {}" + e.getLocalizedMessage());
+    public boolean send() throws IOException {
+        OutputStream out = clientSocket.getOutputStream();
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        out.write((user + ": ").getBytes());
+        String command;
+        command = in.readLine();
+        if (command.equals("show running-config")) {
+            out.write(("\r\nBuilding configuration...\r\n").getBytes());
+            /**/
+            out.write(("\r\ninterface FastEthernet0/0\r\n" +
+                    "description \"LAN1\"\r\n" +
+                    "ip address 192.168.0.1 255.255.255.0\r\n" +
+                    "end\r\n").getBytes());
+        } else {
+            System.err.println("\nIncorrect command. Access denied.\n");
+            out.write(("\r\nIncorrect command. Access denied.\r\n").getBytes());
+            disconnect();
+            return false;
         }
-        return "Ok";
+        return true;
     }
 
-    public Boolean login() throws IOException {
+    public boolean login() throws IOException {
         OutputStream out = clientSocket.getOutputStream();
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         assert out != null;
@@ -100,15 +104,14 @@ public class TcpEchoServer {
             user = login;
             return true;
         } else {
+            System.err.println("\nIncorrect login. Access denied.\n");
             out.write(("\r\nIncorrect login. Access denied.\r\n").getBytes());
-            System.err.println("\nIncorrect login. Access denied.");
             disconnect();
-            System.exit(0);
             return false;
         }
     }
 
-    public Boolean password() throws IOException {
+    public boolean password() throws IOException {
         OutputStream out = clientSocket.getOutputStream();
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out.write("password: ".getBytes());
@@ -135,10 +138,9 @@ public class TcpEchoServer {
                     out.write(("Successful authorization for user " + user + " in " + time + ".\r\n\r\n").getBytes());
                     userActivityId = userActivityService.connected(user, time);
                 } else {
+                    System.err.println("\nIncorrect password. Access denied.\n");
                     out.write(("\r\nIncorrect password. Access denied.\r\n").getBytes());
-                    System.err.println("\nIncorrect password. Access denied.");
                     disconnect();
-                    System.exit(0);
                     return false;
                 }
             }

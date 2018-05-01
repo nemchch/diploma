@@ -11,14 +11,11 @@ public class UserActivityEntity {
     @Column(name = "id")
     private long id;
 
-
     @Column(name = "user_id")
     private long userId;
 
-
     @Column(name = "connection_time")
     private String connectionTime;
-
 
     @Column(name = "disconnection_time")
     private String disconnectionTime;
