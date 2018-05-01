@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ActionController {
     public static void main(String[] args) {
-        String string = "?connect{t<10} . !login{t<5}. !password{t<30} .! send {t<60} .! disconnect{t<10}";
+        String string = "?connect{t<10} . !login{t<20}. !password{t<30} .! send {t<60} .! disconnect{t<10}";
         TcpEchoServer server = new TcpEchoServer();
         List<Action> actions = null;
         TimeLimiter timeLimiter = new SimpleTimeLimiter();
