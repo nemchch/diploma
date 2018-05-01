@@ -74,7 +74,7 @@ public class TcpEchoServer {
     public boolean send() throws IOException {
         OutputStream out = clientSocket.getOutputStream();
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        out.write((user + ": ").getBytes());
+        out.write(("\r\n"+ user + ": ").getBytes());
         String command;
         command = in.readLine();
         if (command.equals("show running-config")) {
@@ -119,7 +119,7 @@ public class TcpEchoServer {
         if (isPasswordCorrect(user, password)) {
             System.out.println("Password is " + password + ".");
             String time = new Date().toString();
-            out.write(("Successful authorization for user " + user + " in " + time + ".\r\n\r\n").getBytes());
+            out.write(("Successful authorization for user " + user + " in " + time + ".\r\n").getBytes());
             userActivityId = userActivityService.connected(user, time);
         } else {
             out.write("Incorrect password. Please, try again.\r\npassword: ".getBytes());
@@ -127,7 +127,7 @@ public class TcpEchoServer {
             if (isPasswordCorrect(user, password)) {
                 System.out.println("Password is " + password + ".");
                 String time = new Date().toString();
-                out.write(("Successful authorization for user " + user + " in " + time + ".\r\n\r\n").getBytes());
+                out.write(("Successful authorization for user " + user + " in " + time + ".\r\n").getBytes());
                 userActivityId = userActivityService.connected(user, time);
             } else {
                 out.write("Incorrect password. Please, try again.\r\npassword: ".getBytes());
@@ -135,7 +135,7 @@ public class TcpEchoServer {
                 if (isPasswordCorrect(user, password)) {
                     System.out.println("Password is " + password + ".");
                     String time = new Date().toString();
-                    out.write(("Successful authorization for user " + user + " in " + time + ".\r\n\r\n").getBytes());
+                    out.write(("Successful authorization for user " + user + " in " + time + ".\r\n").getBytes());
                     userActivityId = userActivityService.connected(user, time);
                 } else {
                     System.err.println("\nIncorrect password. Access denied.\n");

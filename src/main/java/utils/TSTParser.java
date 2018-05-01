@@ -5,6 +5,7 @@ import data.Label;
 import data.ReceiveAction;
 import data.SendAction;
 import exceptions.IllegalActionException;
+import exceptions.IncorrectTimeoutException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -46,10 +47,22 @@ public class TSTParser {
             action.setLabel(null);
         }
         try {
-            action.setTime(Integer.parseInt(string.substring(string.indexOf("<") + 1, string.indexOf("}"))));
+            int time = Integer.parseInt(string.substring(string.indexOf("<") + 1, string.indexOf("}")));
+            if (time >= 0) {
+                action.setTime(time);
+            } else {
+                exit(action);
+            }
         } catch (Exception e) {
             action.setTime(0);
         }
         return action;
+    }
+    private static void exit(Action action) {
+        try {
+            throw new IncorrectTimeoutException("Timeout for action \"" + action.getLabel() + "\" is incorrect.");
+        } catch (IncorrectTimeoutException ignored) {
+        }
+        System.exit(1);
     }
 }
