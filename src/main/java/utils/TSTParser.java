@@ -30,6 +30,21 @@ public class TSTParser {
                 }
             }
         }
+        actionList = validateTime(actionList);
+        return actionList;
+    }
+
+    private static List<Action> validateTime(List<Action> actionList) {
+        Action action;
+        for (int i=1;i<actionList.size();++i) {
+            action = actionList.get(i);
+            int time = actionList.get(i).getTime();
+            for (int j=0; j<i;++j) {
+                time -= actionList.get(j).getTime();
+            }
+            action.setTime(time);
+            actionList.set(i, action);
+        }
         return actionList;
     }
 
