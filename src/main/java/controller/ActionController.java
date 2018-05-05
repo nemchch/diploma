@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ActionController {
     public static void main(String[] args) {
-        String clientProtocolString = "?connect{t<10} .!login{t<20}.!password{t<60}.!send{t<80} .? disconnect{t<90}";
-        String serverProtocolString = "!connect{t<10} .?login{t<30}.?password{t<60} .?send{t<80}.! disconnect{t<90}";
+        String clientProtocolString = "?connect{t<10} .!login{t<20}.!password{t<60}.!send{t<180} .? disconnect{t<190}";
+        String serverProtocolString = "!connect{t<10} .?login{t<30}.?password{t<60} .?send{t<180}.! disconnect{t<190}";
         TST clientProtocol = new TST(clientProtocolString);
         TST serverProtocol = new TST(serverProtocolString);
         if (serverProtocol.isCompliantWith(clientProtocol)) {

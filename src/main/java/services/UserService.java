@@ -1,7 +1,9 @@
 package services;
 
 public interface UserService {
-    String getPassword(String login);
+    boolean isPassword(String login, String password);
 
     boolean isLogin(String login);
+
+    long getId(String login);
 }

@@ -18,15 +18,15 @@ public class UserDaoImpl extends Dao implements UserDao {
     }
 
     @Override
-    public String getPassword(String login) {
-        String password = "";
+    public boolean isPassword(String login, String password) {
+        int hashPassword = 0;
         try {
-            password = (String) this.getSession().createQuery("select password from UserEntity where login = :login")
+            hashPassword = (int) this.getSession().createQuery("select password from UserEntity where login = :login")
                     .setParameter("login", login)
                     .list().get(0);
         } catch (Exception ignored) {
         }
-        return password;
+        return password.hashCode() == hashPassword;
     }
 
     @Override
