@@ -39,14 +39,14 @@ public class ActionController {
                 try {
                     server.initialize();
                 } catch (Exception e) {
-                    System.err.println("Couldn't start server:\n" + e);
+                    System.err.println("\nConnection failed.\n");
                     System.exit(0);
                 }
                 assert serverActions != null;
                 try {
                     action = getAction(serverActions, "connect");
                 } catch (Exception e) {
-                    System.err.println("Action \"connect\" is not present. Protocol is unavailable");
+                    System.err.println("\nAction \"connect\" is not present. Protocol is unavailable\n");
                     System.exit(1);
                 }
                 if (action != null) {
@@ -57,19 +57,17 @@ public class ActionController {
                     assert clientActions != null;
                     action = getAction(clientActions, "login");
                 } catch (Exception e) {
-                    System.err.println("Action \"login\" is not present. Protocol is unavailable");
+                    System.err.println("\nAction \"login\" is not present. Protocol is unavailable\n");
                     server.disconnect();
                 }
                 if (action != null) {
                     Callable<Boolean> loginTask = server::login;
                     timeLimiter.callWithTimeout(loginTask, action.getTime(), TimeUnit.SECONDS, true);
                 }
-
-
                 try {
                     action = getAction(clientActions, "password");
                 } catch (Exception e) {
-                    System.err.println("Action \"password\" is not present. Protocol is unavailable");
+                    System.err.println("\nAction \"password\" is not present. Protocol is unavailable\n");
                     server.disconnect();
                 }
                 if (action != null) {
@@ -99,7 +97,7 @@ public class ActionController {
                 System.exit(1);
             }
         } else {
-            System.err.println("Protocols are not compliant");
+            System.err.println("\nProtocols are not compliant.\n");
             System.exit(1);
         }
     }
