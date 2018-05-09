@@ -10,13 +10,30 @@ import server.TcpEchoServer;
 import utils.TSTParser;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import static utils.ProtocolsLoader.getProtocols;
+
 public class ActionController {
     public static void main(String[] args) {
-        String clientProtocolString = "?connect{t<10} .!login{t<20}.!password{t<60}.!send{t<180} .? disconnect{t<190}";
-        String serverProtocolString = "!connect{t<10} .?login{t<30}.?password{t<60} .?send{t<180}.! disconnect{t<190}";
+        String clientProtocolString = "";
+        String serverProtocolString = "";
+        Map<String, String> protocolsMap = getProtocols();
+        if (protocolsMap.get("clientProtocol") != null) {
+            clientProtocolString = protocolsMap.get("clientProtocol");
+        } else {
+            System.err.println("\nProtocol is not present.\n");
+            System.exit(1);
+        }
+        if (protocolsMap.get("serverProtocol") != null) {
+            serverProtocolString = protocolsMap.get("serverProtocol");
+        } else {
+            System.err.println("\nProtocol is not present.\n");
+            System.exit(1);
+        }
+
         TST clientProtocol = new TST(clientProtocolString);
         TST serverProtocol = new TST(serverProtocolString);
         if (serverProtocol.isCompliantWith(clientProtocol)) {
@@ -40,7 +57,7 @@ public class ActionController {
                     server.initialize();
                 } catch (Exception e) {
                     System.err.println("\nConnection failed.\n");
-                    System.exit(0);
+                    System.exit(1);
                 }
                 assert serverActions != null;
                 try {
