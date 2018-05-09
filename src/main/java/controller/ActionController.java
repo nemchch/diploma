@@ -24,13 +24,13 @@ public class ActionController {
         if (protocolsMap.get("clientProtocol") != null) {
             clientProtocolString = protocolsMap.get("clientProtocol");
         } else {
-            System.err.println("\nProtocol is not present.\n");
+            System.err.println("\nClient protocol is not present.\n");
             System.exit(1);
         }
         if (protocolsMap.get("serverProtocol") != null) {
             serverProtocolString = protocolsMap.get("serverProtocol");
         } else {
-            System.err.println("\nProtocol is not present.\n");
+            System.err.println("\nServer protocol is not present.\n");
             System.exit(1);
         }
 
