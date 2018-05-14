@@ -1,11 +1,11 @@
-package utils;
+package util;
 
 import data.Action;
 import data.Label;
 import data.ReceiveAction;
 import data.SendAction;
-import exceptions.IllegalActionException;
-import exceptions.IncorrectTimeoutException;
+import exception.IllegalActionException;
+import exception.IncorrectTimeoutException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

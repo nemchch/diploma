@@ -1,11 +1,11 @@
-package services.impl;
+package service.impl;
 
 import dao.UserActivityDao;
 import dao.UserDao;
 import dao.impl.UserActivityDaoImpl;
 import dao.impl.UserDaoImpl;
 import model.UserActivityEntity;
-import services.UserActivityService;
+import service.UserActivityService;
 
 public class UserActivityServiceImpl implements UserActivityService {
 

@@ -1,8 +1,8 @@
-package services.impl;
+package service.impl;
 
 import dao.UserDao;
 import dao.impl.UserDaoImpl;
-import services.UserService;
+import service.UserService;
 
 public class UserServiceImpl implements UserService {
 

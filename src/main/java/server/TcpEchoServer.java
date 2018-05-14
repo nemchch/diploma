@@ -1,12 +1,12 @@
 package server;
 
 import org.jetbrains.annotations.Contract;
-import services.UserActivityService;
-import services.UserConfigService;
-import services.UserService;
-import services.impl.UserActivityServiceImpl;
-import services.impl.UserConfigServiceImpl;
-import services.impl.UserServiceImpl;
+import service.UserActivityService;
+import service.UserConfigService;
+import service.UserService;
+import service.impl.UserActivityServiceImpl;
+import service.impl.UserConfigServiceImpl;
+import service.impl.UserServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;

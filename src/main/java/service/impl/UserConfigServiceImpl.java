@@ -1,8 +1,8 @@
-package services.impl;
+package service.impl;
 
 import dao.UserConfigDao;
 import dao.impl.UserConfigDaoImpl;
-import services.UserConfigService;
+import service.UserConfigService;
 
 public class UserConfigServiceImpl implements UserConfigService {
 

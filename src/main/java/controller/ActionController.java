@@ -5,16 +5,16 @@ import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;
 import data.Action;
 import data.Label;
-import exceptions.IllegalActionException;
+import exception.IllegalActionException;
 import server.TcpEchoServer;
-import utils.TSTParser;
+import util.TSTParser;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import static utils.ProtocolsLoader.getProtocols;
+import static util.ProtocolsLoader.getProtocols;
 
 public class ActionController {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package services;
+package service;
 
 public interface UserActivityService {
     long connected(String login, String connectionTime);
