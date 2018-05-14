@@ -91,13 +91,18 @@ public class TcpEchoServer {
             String config = userConfigService.getConfig(userService.getId(user));
             out.write((config).getBytes());
         } else {
-            System.err.println("\nIncorrect command. Access denied.\n");
-            out.write(("\r\nIncorrect command. Access denied.\r\n").getBytes());
-            disconnect();
-            return false;
+            if (command.equals("quit")) {
+                disconnect();
+            } else {
+                System.err.println("\nIncorrect command. Access denied.\n");
+                out.write(("\r\nIncorrect command. Access denied.\r\n").getBytes());
+                disconnect();
+                return false;
+            }
         }
         return true;
     }
+
 
     public boolean login() throws IOException {
         OutputStream out = clientSocket.getOutputStream();
