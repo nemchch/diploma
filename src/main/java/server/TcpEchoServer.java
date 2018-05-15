@@ -124,8 +124,11 @@ public class TcpEchoServer {
     public boolean password() throws IOException {
         OutputStream out = clientSocket.getOutputStream();
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        out.write(new byte[]{(byte) 0xFF, (byte) 0xFE, 0x01});
+        out.flush();
         out.write("password: ".getBytes());
-        String password = in.readLine();
+        String password = in.readLine().substring(3);
+        System.out.println(password);
         if (isPasswordCorrect(user, password)) {
             String time = new Date().toString();
             out.write(("Successful authorization for user " + user + " in " + time + ".\r\n").getBytes());
@@ -152,6 +155,8 @@ public class TcpEchoServer {
                 }
             }
         }
+        out.write(new byte[]{(byte) 0xFF, (byte) 0xFD, 0x01});
+        out.flush();
         return true;
     }
 

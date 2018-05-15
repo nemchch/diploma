@@ -20,6 +20,9 @@ public class ActionController {
     public static void main(String[] args) {
         String clientProtocolString = "";
         String serverProtocolString = "";
+        int addedTime = 0;
+        long start;
+        long finish;
         Map<String, String> protocolsMap = getProtocols();
         if (protocolsMap.get("clientProtocol") != null) {
             clientProtocolString = protocolsMap.get("clientProtocol");
@@ -68,7 +71,10 @@ public class ActionController {
                 }
                 if (action != null) {
                     Callable<Boolean> connectTask = server::connect;
+                    start = System.currentTimeMillis();
                     timeLimiter.callWithTimeout(connectTask, action.getTime(), TimeUnit.SECONDS, true);
+                    finish = System.currentTimeMillis();
+                    addedTime += (finish - start)/1000;
                 }
                 try {
                     assert clientActions != null;
@@ -79,7 +85,10 @@ public class ActionController {
                 }
                 if (action != null) {
                     Callable<Boolean> loginTask = server::login;
-                    timeLimiter.callWithTimeout(loginTask, action.getTime(), TimeUnit.SECONDS, true);
+                    start = System.currentTimeMillis();
+                    timeLimiter.callWithTimeout(loginTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
+                    finish = System.currentTimeMillis();
+                    addedTime += (finish - start)/1000;
                 }
                 try {
                     action = getAction(clientActions, "password");
@@ -89,15 +98,20 @@ public class ActionController {
                 }
                 if (action != null) {
                     Callable<Boolean> passwordTask = server::password;
-                    timeLimiter.callWithTimeout(passwordTask, action.getTime(), TimeUnit.SECONDS, true);
+                    start = System.currentTimeMillis();
+                    timeLimiter.callWithTimeout(passwordTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
+                    finish = System.currentTimeMillis();
+                    addedTime += (finish - start)/1000;
                 }
                 try {
                     action = getAction(clientActions, "send");
                 } catch (Exception ignored) {
                 }
                 if (action != null) {
-                    Callable<Boolean> sendTask = server::send;
-                    timeLimiter.callWithTimeout(sendTask, action.getTime(), TimeUnit.SECONDS, true);
+                    Callable<Boolean> sendTask = server::send;start = System.currentTimeMillis();
+                    timeLimiter.callWithTimeout(sendTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
+                    finish = System.currentTimeMillis();
+                    addedTime += (finish - start)/1000;
                 }
                 try {
                     action = getAction(serverActions, "disconnect");
@@ -105,7 +119,10 @@ public class ActionController {
                 }
                 if (action != null) {
                     Callable<Boolean> disconnectTask = server::disconnect;
-                    timeLimiter.callWithTimeout(disconnectTask, action.getTime(), TimeUnit.SECONDS, true);
+                    start = System.currentTimeMillis();
+                    timeLimiter.callWithTimeout(disconnectTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
+                    finish = System.currentTimeMillis();
+                    System.out.println((finish - start)/1000);
                 }
             } catch (Exception e) {
                 server.writeError();
