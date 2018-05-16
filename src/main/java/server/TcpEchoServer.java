@@ -8,10 +8,7 @@ import service.impl.UserActivityServiceImpl;
 import service.impl.UserConfigServiceImpl;
 import service.impl.UserServiceImpl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
@@ -124,11 +121,9 @@ public class TcpEchoServer {
     public boolean password() throws IOException {
         OutputStream out = clientSocket.getOutputStream();
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        out.write(new byte[]{(byte) 0xFF, (byte) 0xFE, 0x01});
-        out.flush();
+        //out.write(new byte[]{(byte) 0xFF, (byte) 0xFE, 0x01});
         out.write("password: ".getBytes());
-        String password = in.readLine().substring(3);
-        System.out.println(password);
+        String password = in.readLine()/*.substring(3)*/;
         if (isPasswordCorrect(user, password)) {
             String time = new Date().toString();
             out.write(("Successful authorization for user " + user + " in " + time + ".\r\n").getBytes());
@@ -155,8 +150,8 @@ public class TcpEchoServer {
                 }
             }
         }
-        out.write(new byte[]{(byte) 0xFF, (byte) 0xFD, 0x01});
-        out.flush();
+
+        //out.write(new byte[]{(byte) 0xFF, (byte) 0xFD, 0x01});
         return true;
     }
 
