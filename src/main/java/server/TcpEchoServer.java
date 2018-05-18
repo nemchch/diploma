@@ -29,7 +29,8 @@ public class TcpEchoServer {
         try {
             setServer(new ServerSocket(PORT));
         } catch (Exception ex) {
-            System.err.println("Could not listen on port: " + PORT + ".");
+            System.err.println("\nCould not listen on port: " + PORT + ".\n");
+            System.exit(1);
         }
     }
 

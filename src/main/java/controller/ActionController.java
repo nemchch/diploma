@@ -5,7 +5,7 @@ import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;
 import data.Action;
 import data.Label;
-import exception.IllegalActionException;
+import exception.IncorrectActionException;
 import server.TcpEchoServer;
 import util.TSTParser;
 
@@ -20,6 +20,8 @@ public class ActionController {
     public static void main(String[] args) {
         String clientProtocolString = "";
         String serverProtocolString = "";
+        TST clientProtocol = null;
+        TST serverProtocol = null;
         int addedTime = 0;
         long start;
         long finish;
@@ -37,8 +39,25 @@ public class ActionController {
             System.exit(1);
         }
 
-        TST clientProtocol = new TST(clientProtocolString);
-        TST serverProtocol = new TST(serverProtocolString);
+        try {
+            clientProtocol = new TST(clientProtocolString);
+        } catch (Exception e) {
+            try {
+                throw new IncorrectActionException("Client");
+            } catch (IncorrectActionException e1) {
+                e1.getMessage();
+            }
+        }
+        try {
+            serverProtocol = new TST(serverProtocolString);
+        } catch (Exception e) {
+            try {
+                throw new IncorrectActionException("Server");
+            } catch (IncorrectActionException ignored) {
+            }
+        }
+        assert serverProtocol != null;
+        assert clientProtocol != null;
         if (serverProtocol.isCompliantWith(clientProtocol)) {
             TcpEchoServer server = new TcpEchoServer();
             List<Action> serverActions = null;
@@ -47,13 +66,11 @@ public class ActionController {
             Action action = null;
             try {
                 serverActions = TSTParser.parse(serverProtocolString);
-            } catch (IllegalActionException e) {
-                e.printStackTrace();
+            } catch (IncorrectActionException ignored) {
             }
             try {
                 clientActions = TSTParser.parse(clientProtocolString);
-            } catch (IllegalActionException e) {
-                e.printStackTrace();
+            } catch (IncorrectActionException ignored) {
             }
             try {
                 try {
@@ -63,66 +80,58 @@ public class ActionController {
                     System.exit(1);
                 }
                 assert serverActions != null;
-                try {
-                    action = getAction(serverActions, "connect");
-                } catch (Exception e) {
-                    System.err.println("\nAction \"connect\" is not present. Protocol is unavailable\n");
+                action = getAction(serverActions, "connect");
+                if (action == null) {
+                    System.err.println("\nAction \"connect\" is not present. Protocol is unavailable.\n");
                     System.exit(1);
-                }
-                if (action != null) {
+                } else {
                     Callable<Boolean> connectTask = server::connect;
                     start = System.currentTimeMillis();
                     timeLimiter.callWithTimeout(connectTask, action.getTime(), TimeUnit.SECONDS, true);
                     finish = System.currentTimeMillis();
-                    addedTime += (finish - start)/1000;
+                    addedTime += (finish - start) / 1000;
                 }
-                try {
-                    assert clientActions != null;
-                    action = getAction(clientActions, "login");
-                } catch (Exception e) {
-                    System.err.println("\nAction \"login\" is not present. Protocol is unavailable\n");
+                assert clientActions != null;
+                action = getAction(clientActions, "login");
+                if (action == null) {
+                    System.err.println("\nAction \"login\" is not present. Protocol is unavailable.\n");
                     server.disconnect();
-                }
-                if (action != null) {
+                } else {
                     Callable<Boolean> loginTask = server::login;
                     start = System.currentTimeMillis();
                     timeLimiter.callWithTimeout(loginTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
                     finish = System.currentTimeMillis();
-                    addedTime += (finish - start)/1000;
+                    addedTime += (finish - start) / 1000;
                 }
-                try {
-                    action = getAction(clientActions, "password");
-                } catch (Exception e) {
-                    System.err.println("\nAction \"password\" is not present. Protocol is unavailable\n");
+                action = getAction(clientActions, "password");
+                if (action == null) {
+                    System.err.println("\nAction \"password\" is not present. Protocol is unavailable.\n");
                     server.disconnect();
-                }
-                if (action != null) {
+                } else {
                     Callable<Boolean> passwordTask = server::password;
                     start = System.currentTimeMillis();
                     timeLimiter.callWithTimeout(passwordTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
                     finish = System.currentTimeMillis();
-                    addedTime += (finish - start)/1000;
+                    addedTime += (finish - start) / 1000;
                 }
-                try {
-                    action = getAction(clientActions, "send");
-                } catch (Exception ignored) {
-                }
+                action = getAction(clientActions, "send");
                 if (action != null) {
-                    Callable<Boolean> sendTask = server::send;start = System.currentTimeMillis();
+                    Callable<Boolean> sendTask = server::send;
+                    start = System.currentTimeMillis();
                     timeLimiter.callWithTimeout(sendTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
                     finish = System.currentTimeMillis();
-                    addedTime += (finish - start)/1000;
+                    addedTime += (finish - start) / 1000;
                 }
-                try {
-                    action = getAction(serverActions, "disconnect");
-                } catch (Exception ignored) {
-                }
-                if (action != null) {
+                action = getAction(serverActions, "disconnect");
+                if (action == null) {
+                    System.err.println("\nAction \"disconnect\" is not present. Protocol is unavailable.\n");
+                    server.disconnect();
+                } else {
                     Callable<Boolean> disconnectTask = server::disconnect;
                     start = System.currentTimeMillis();
                     timeLimiter.callWithTimeout(disconnectTask, action.getTime() + addedTime, TimeUnit.SECONDS, true);
                     finish = System.currentTimeMillis();
-                    System.out.println((finish - start)/1000);
+                    System.out.println((finish - start) / 1000);
                 }
             } catch (Exception e) {
                 server.writeError();

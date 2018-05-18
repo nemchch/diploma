@@ -4,7 +4,7 @@ import data.Action;
 import data.Label;
 import data.ReceiveAction;
 import data.SendAction;
-import exception.IllegalActionException;
+import exception.IncorrectActionException;
 import exception.IncorrectTimeoutException;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TSTParser {
 
-    public static List<Action> parse(String globalAction) throws IllegalActionException {
+    public static List<Action> parse(String globalAction) throws IncorrectActionException {
         List<Action> actionList = new ArrayList<>();
         globalAction = validate(globalAction);
         String[] actions = globalAction.split("\\.");
@@ -26,7 +26,7 @@ public class TSTParser {
                     ReceiveAction receiveAction = new ReceiveAction(setParameters(action));
                     actionList.add(receiveAction);
                 } else {
-                    throw new IllegalActionException();
+                    throw new IncorrectActionException();
                 }
             }
         }
